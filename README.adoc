@@ -1,0 +1,25 @@
+= README
+
+Prerequisite for the next steps:
+
+    $ # copy .env.sample to .env and adjust it as you want.
+    $ cp .env.sample .env
+    $ vim .env
+
+Start the container:
+
+    $ docker compose up -d
+
+Observe the logs:
+
+    $ docker compose logs -f
+
+See inside:
+
+    $ docker exec -it docker-db2-db-1 bash -c "su - db2inst1"
+
+Destroy the entire environment:
+
+    $ docker compose down
+    $ docker rmi docker-db2-db
+
