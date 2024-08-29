@@ -1,12 +1,30 @@
 services:
-  db:
+  db2_pertama:
     build: .
     privileged: true
     restart: always
     ports:
-      - "50001:50000"
+      - "127.0.0.1:6001:50000"
     environment:
       LICENSE: accept
-      DB2INST1_PASSWORD: ${DB2INST1_PASSWORD}
+      DB2INSTANCE: ${DB2NAME}_1
+      DB2INST1_PASSWORD: ${INSTANCE1_PASSWORD}
       DBNAME: ${DBNAME}
       DB2COMM: TCPIP
+      HADR_ENABLED: true
+      ETCD_ENDPOINT: 127.0.0.1:6001,127.0.0.1:6002
+      
+  db2_kedua:
+    build: .
+    privileged: true
+    restart: always
+    ports:
+      - "127.0.0.1:6002:50000"
+    environment:
+      LICENSE: accept
+      DB2INSTANCE: ${DB2NAME}_2
+      DB2INST1_PASSWORD: ${INSTANCE2_PASSWORD}
+      DBNAME: ${DBNAME}
+      DB2COMM: TCPIP
+      HADR_ENABLED: true
+      ETCD_ENDPOINT: 127.0.0.1:6001,127.0.0.1:6002
