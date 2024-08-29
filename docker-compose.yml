@@ -1,10 +1,13 @@
 services:
   db2_pertama:
+    container_name: db21
     build: .
     privileged: true
     restart: always
     ports:
       - "127.0.0.1:6001:50000"
+    networks:
+      - ibm_db2
     environment:
       LICENSE: accept
       DB2INSTANCE: ${DB2NAME}_1
@@ -15,11 +18,14 @@ services:
       ETCD_ENDPOINT: 127.0.0.1:6001,127.0.0.1:6002
       
   db2_kedua:
+    container_name: db22
     build: .
     privileged: true
     restart: always
     ports:
       - "127.0.0.1:6002:50000"
+    networks:
+      - ibm_db2
     environment:
       LICENSE: accept
       DB2INSTANCE: ${DB2NAME}_2
@@ -28,3 +34,7 @@ services:
       DB2COMM: TCPIP
       HADR_ENABLED: true
       ETCD_ENDPOINT: 127.0.0.1:6001,127.0.0.1:6002
+networks:
+  ibm_db2:
+    name: db2net
+    driver: bridge
