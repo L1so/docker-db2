@@ -16,7 +16,10 @@ services:
       DB2COMM: TCPIP
       HADR_ENABLED: true
       ETCD_ENDPOINT: 127.0.0.1:6001,127.0.0.1:6002
-      
+    volumes:
+      - ./db21/database:/database
+      - ./db21/data:/home/${DB2NAME}_1/data
+
   db2_kedua:
     container_name: db22
     build: .
@@ -34,6 +37,9 @@ services:
       DB2COMM: TCPIP
       HADR_ENABLED: true
       ETCD_ENDPOINT: 127.0.0.1:6001,127.0.0.1:6002
+    volumes:
+      - ./db22/database:/database
+      - ./db22/data:/home/${DB2NAME}_2/data
 networks:
   ibm_db2:
     name: db2net
